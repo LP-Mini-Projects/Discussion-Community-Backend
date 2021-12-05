@@ -91,3 +91,10 @@ class User(AbstractBaseUser):
     @property
     def is_verified(self):
         return self.verified
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {
+            'refresh': str(refresh),
+            'access': str(refresh.access_token)
+        }
