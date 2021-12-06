@@ -14,6 +14,7 @@ import os
 import datetime
 from pathlib import Path
 from decouple import config
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -168,3 +169,5 @@ EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
 FRONT_END_HOST="http://localhost:3000/"
 DEFAULT_FROM_EMAIL =config('DEFAULT_FROM_EMAIL')
 SERVER_EMAIL = config('SERVER_EMAIL')
+
+django_heroku.settings(locals())
