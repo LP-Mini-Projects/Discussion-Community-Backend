@@ -14,7 +14,6 @@ import os
 import datetime
 from pathlib import Path
 from decouple import config
-import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,9 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['https://dubium-apis.herokuapp.com/', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -56,9 +55,6 @@ AUTH_USER_MODEL = 'Accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    #whitenoise for staticfiles
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    #end
     'django.contrib.sessions.middleware.SessionMiddleware',
     #Cors addition
     'corsheaders.middleware.CorsMiddleware',
@@ -150,7 +146,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -173,5 +168,3 @@ EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
 FRONT_END_HOST="http://localhost:3000/"
 DEFAULT_FROM_EMAIL =config('DEFAULT_FROM_EMAIL')
 SERVER_EMAIL = config('SERVER_EMAIL')
-
-django_heroku.settings(locals())
