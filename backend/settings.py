@@ -56,11 +56,10 @@ AUTH_USER_MODEL = 'Accounts.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     #whitenoise for staticfiles
     'whitenoise.middleware.WhiteNoiseMiddleware',
     #End
-
+    'django.contrib.sessions.middleware.SessionMiddleware',
     #Cors addition
     'corsheaders.middleware.CorsMiddleware',
     # End
