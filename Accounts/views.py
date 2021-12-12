@@ -38,9 +38,7 @@ class SignUp(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPI
 
             token = RefreshToken.for_user(user_data).access_token
             # token = Token.objects.get_or_create(user=user)
-            current_site = get_current_site(request).domain
-            relativeLink = reverse('EmailVerification')
-            abs_url = 'http://'+ current_site + relativeLink + "?token=" + str(token)
+            abs_url = settings.FRONT_END_HOST + "verify/token=" + str(token)
             email_body = "Hiii! Use link below to verify your email \n"+ abs_url
             data ={'email_body': email_body, 'email_subject': "Verify your Email",'to_email':user_data.email}
 
@@ -58,8 +56,8 @@ class VerifyEmail(APIView):
     token_param_config = openapi.Parameter('token',in_=openapi.IN_QUERY, type=openapi.TYPE_STRING, description="Enter token here")
 
     @swagger_auto_schema(manual_parameters=[token_param_config])
-    def get(self, request):
-        token = request.GET.get('token')
+    def get(self, request, *args, **kwargs):
+        token = self.kwargs['pk']
 
         try:
             payload = jwt.decode(token,settings.SECRET_KEY, algorithms=['HS256'])
@@ -99,8 +97,3 @@ class GoogleSocialAuthView(GenericAPIView):
         serializer.is_valid(raise_exception=True)
         data = ((serializer.validated_data)['auth_token'])
         return Response(data, status=status.HTTP_200_OK)
-
-
-
-def GoogleLoginView(request):
-    return render(request,'index.html')
